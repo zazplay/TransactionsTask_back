@@ -7,7 +7,13 @@ import * as mongoose from 'mongoose';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Включаем глобальную валидацию
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    credentials: false,
+  });
+
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
